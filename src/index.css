@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/* ─── Custom Properties ─────────────────────────────────── */
+:root {
+  --bg-deep: #020810;
+  --bg-panel: rgba(4, 14, 30, 0.88);
+  --color-grid: rgba(0, 200, 255, 0.06);
+  --color-accent: #00c8ff;
+  --color-accent-glow: rgba(0, 200, 255, 0.35);
+  --color-carbs: #3ddc84;       /* photosynthesis green - real-life */
+  --color-carbs-glow: rgba(61, 220, 132, 0.45);
+  --color-lipid: #f7a04b;
+  --color-protein: #c084fc;
+  --color-nucleic: #f472b6;
+  --color-enzyme: #60a5fa;
+  --color-water: #38bdf8;
+  --glass-bg: rgba(8, 22, 48, 0.72);
+  --glass-border: rgba(0, 200, 255, 0.18);
+  --font-serif: 'Baskervville', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ─── Reset / Base ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  font-family: var(--font-sans);
+  color: #e2e8f0;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 4px; }
+
+/* ─── Glassmorphism Panel ───────────────────────────────── */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border-left: 1px solid var(--glass-border);
+  border-top: 1px solid rgba(0, 200, 255, 0.1);
+}
+
+/* ─── Serif Title ───────────────────────────────────────── */
+.serif { font-family: var(--font-serif); }
+.mono  { font-family: var(--font-mono); }
+
+/* ─── Glow Text ─────────────────────────────────────────── */
+.text-glow-green {
+  color: var(--color-carbs);
+  text-shadow: 0 0 18px var(--color-carbs-glow), 0 0 40px rgba(61,220,132,0.2);
+}
+.text-glow-cyan {
+  color: var(--color-accent);
+  text-shadow: 0 0 14px var(--color-accent-glow);
+}
+
+/* ─── Node Coordinate Label ─────────────────────────────── */
+.coord-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  opacity: 0.7;
+  user-select: none;
+}
+
+/* ─── Discovery Log Cards ───────────────────────────────── */
+.discovery-card {
+  background: rgba(0, 200, 255, 0.04);
+  border: 1px solid rgba(0, 200, 255, 0.1);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+.discovery-card:hover {
+  border-color: rgba(0, 200, 255, 0.25);
+}
+.discovery-card .log-id {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  opacity: 0.8;
+}
+.discovery-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: #e2e8f0;
+  margin-bottom: 8px;
+}
+.discovery-card p, .discovery-card li {
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: #94a3b8;
+}
+.discovery-card ul { padding-left: 16px; }
+.discovery-card li { margin-bottom: 4px; }
+
+/* ─── Functional Table ──────────────────────────────────── */
+.func-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  margin-top: 8px;
+}
+.func-table th {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(0,200,255,0.15);
+  text-align: left;
+}
+.func-table td {
+  padding: 7px 8px;
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: top;
+}
+.func-table tr:last-child td { border-bottom: none; }
+.func-table td:first-child { color: var(--color-carbs); font-weight: 500; }
+
+/* ─── Scan Line Animation ───────────────────────────────── */
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+.scan-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 49%, rgba(0,200,255,0.025) 50%, transparent 51%);
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Pulse ring ─────────────────────────────────────────── */
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.pulse-ring {
+  position: absolute;
+  border-radius: 50%;
+  animation: pulse-ring 2s ease-out infinite;
+}
